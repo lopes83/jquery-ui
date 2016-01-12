@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Position - Image Cycler</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/position.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	body {
@@ -20,8 +23,8 @@
 		position: absolute;
 	}
 	</style>
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js">
+	<script>
+	$(function() {
 		function left( element, using ) {
 			element.position({
 				my: "right middle",
@@ -68,18 +71,19 @@
 			right( $( "img:eq(1)" ), animate );
 			left( $( "img:eq(2)" ).prependTo( "#container" ) );
 		}
-		$( "#previous" ).on( "click", previous );
-		$( "#next" ).on( "click", next );
+		$( "#previous" ).click( previous );
+		$( "#next" ).click( next );
 
-		$( "img" ).on( "click", function( event ) {
+		$( "img" ).click(function( event ) {
 			$( "img" ).index( this ) === 0 ? previous( event ) : next( event );
 		});
 
-		$( window ).on( "resize", function() {
+		$( window ).resize(function() {
 			left( $( "img:eq(0)" ), animate );
 			center( $( "img:eq(1)" ), animate );
 			right( $( "img:eq(2)" ), animate );
 		});
+	});
 	</script>
 </head>
 <body>

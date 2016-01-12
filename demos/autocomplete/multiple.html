@@ -2,12 +2,17 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Autocomplete - Multiple values</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/position.js"></script>
+	<script src="../../ui/menu.js"></script>
+	<script src="../../ui/autocomplete.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js">
+	<script>
+	$(function() {
 		var availableTags = [
 			"ActionScript",
 			"AppleScript",
@@ -41,7 +46,7 @@
 
 		$( "#tags" )
 			// don't navigate away from the field on tab when selecting an item
-			.on( "keydown", function( event ) {
+			.bind( "keydown", function( event ) {
 				if ( event.keyCode === $.ui.keyCode.TAB &&
 						$( this ).autocomplete( "instance" ).menu.active ) {
 					event.preventDefault();
@@ -70,6 +75,7 @@
 					return false;
 				}
 			});
+	});
 	</script>
 </head>
 <body>

@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Progressbar - Indeterminate Value</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/progressbar.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js">
+	<script>
+	$(function() {
 		$( "#progressbar" ).progressbar({
 			value: false
 		});
@@ -28,6 +31,7 @@
 				progressbar.progressbar( "option", "value", false );
 			}
 		});
+	});
 	</script>
 	<style>
 	#progressbar .ui-progressbar-value {

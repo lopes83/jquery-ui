@@ -4,18 +4,14 @@
 	<meta charset="utf-8">
 	<title>Selectmenu Visual Test: Default</title>
 	<link rel="stylesheet" href="../../../themes/base/all.css">
-	<style>
-		fieldset { border: 0; }
-		label { display: block; }
-		select { width: 200px; }
-
-		.ui-selectmenu-button  { display: block; margin-bottom: 1em;}
-
-		/* width */
-		.width-menu { width: 196px; }
-	</style>
-	<script src="../../../external/requirejs/require.js"></script>
-	<script src="../../../demos/bootstrap.js">
+	<script src="../../../external/jquery/jquery.js"></script>
+	<script src="../../../ui/core.js"></script>
+	<script src="../../../ui/widget.js"></script>
+	<script src="../../../ui/position.js"></script>
+	<script src="../../../ui/menu.js"></script>
+	<script src="../../../ui/selectmenu.js"></script>
+	<script>
+	$(function() {
 		var log = $("#log"),
 			index = 0,
 			text;
@@ -38,34 +34,34 @@
 		});
 		eventsSelectmenu.show();
 
-		$("#destroy").on( "click", function() {
+		$("#destroy").click( function() {
 			eventsSelectmenu.selectmenu("destroy");
 			return false;
 		});
 
-		$("#refresh_add").on( "click", function() {
+		$("#refresh_add").click( function() {
 			eventsSelectmenu.append('<option value="fastsound">Speed of light</option>');
 			eventsSelectmenu.selectmenu("refresh");
 			return false;
 		});
 
-		$("#refresh_selected").on( "click", function() {
+		$("#refresh_selected").click( function() {
 			eventsSelectmenu[0].selectedIndex = 0;
 			eventsSelectmenu.selectmenu("refresh");
 			return false;
 		});
 
-		$("#refresh").on( "click", function() {
+		$("#refresh").click( function() {
 			eventsSelectmenu.selectmenu("refresh");
 			return false;
 		});
 
-		$("#open").on( "click", function() {
+		$("#open").click( function() {
 			eventsSelectmenu.selectmenu("open");
 			return false;
 		});
 
-		$("#close").on( "click", function() {
+		$("#close").click( function() {
 			eventsSelectmenu.selectmenu("close");
 			return false;
 		});
@@ -74,7 +70,7 @@
 		$('#disabled1, #disabled2, #disabled3').selectmenu();
 		var disabled4 = $('#disabled4').selectmenu();
 
-		$("#disable_select").on("click", function() {
+		$("#disable_select").bind("click", function() {
 			if (disable_select) {
 				disable_select = false;
 				disabled4.selectmenu("disable");
@@ -86,7 +82,7 @@
 			return false;
 		});
 
-		$("#disable_option").on("click", function() {
+		$("#disable_option").bind("click", function() {
 			if (disable_option) {
 				disable_option = false;
 				disabled4.find("option:eq(0)").attr("disabled", "disabled");
@@ -98,7 +94,7 @@
 			return false;
 		});
 
-		$("#disable_optgroup").on("click", function() {
+		$("#disable_optgroup").bind("click", function() {
 			if (disable_optgroup) {
 				disable_optgroup = false;
 				disabled4.find("optgroup:eq(0)").attr("disabled", "disabled");
@@ -123,7 +119,19 @@
 		var widthMenu = $("#width_menu").selectmenu();
 		widthMenu.selectmenu("menuWidget").addClass("width-menu");
 
+	});
 	</script>
+	<style>
+		body { font-size:62.5%; }
+		fieldset { border: 0; }
+		label { display: block; }
+		select { width: 200px; }
+
+		.ui-selectmenu-button  { display: block; margin-bottom: 1em;}
+
+		/* width */
+		.width-menu { width: 196px; }
+	</style>
 </head>
 <body>
 

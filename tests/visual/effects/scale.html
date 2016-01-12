@@ -4,39 +4,12 @@
 	<meta charset="utf-8">
 	<title>jQuery UI Effects Test Suite</title>
 	<link rel="stylesheet" href="effects.css">
-	<style>
-	#testArea {
-		width: 200px;
-		height: 200px;
-		position: relative;
-	}
-	#testBox {
-		width: 50px;
-		height: 50px;
-		background-color: #bada55;
-		color: black;
-		border: 10px solid #fff;
-		margin: 10px;
-		padding: 10px;
-		position: absolute;
-		left: 5px;
-		top: 5px;
-	}
-	label {
-		display: block;
-	}
-	#controls {
-		position: absolute;
-		z-index: 300;
-		left: 50%;
-		top: 50%;
-		margin-left: -200px;
-		width: 400px;
-		opacity: 0.8;
-	}
-	</style>
-	<script src="../../../external/requirejs/require.js"></script>
-	<script src="../../../demos/bootstrap.js" data-modules="effect-scale" data-composite="true">
+	<script src="../../../external/jquery/jquery.js"></script>
+	<script src="../../../ui/effect.js"></script>
+	<script src="../../../ui/effect-scale.js"></script>
+	<script src="../../../ui/effect-size.js"></script>
+	<script>
+	$(function() {
 		var test = $( "#testBox" ),
 			opts = $( ".arg" ),
 			optsRev = $( opts.get().reverse() ),
@@ -48,12 +21,12 @@
 			total *= this.options.length;
 		});
 
-		opts.on( "change", doAnim );
-		doer.on( "click", doAnim );
-		$( "#cyclePrev" ).on( "click", function() {
+		opts.change( doAnim );
+		doer.click( doAnim );
+		$( "#cyclePrev" ).click(function() {
 			cycle( -1 );
 		});
-		$( "#cycleNext" ).on( "click", function() {
+		$( "#cycleNext" ).click(function() {
 			cycle( 1 );
 		});
 
@@ -111,7 +84,39 @@
 				.delay( 100 )
 				.effect( effect );
 		}
+	});
 	</script>
+	<style>
+	#testArea {
+		width: 200px;
+		height: 200px;
+		position: relative;
+	}
+	#testBox {
+		width: 50px;
+		height: 50px;
+		background-color: #bada55;
+		color: black;
+		border: 10px solid #fff;
+		margin: 10px;
+		padding: 10px;
+		position: absolute;
+		left: 5px;
+		top: 5px;
+	}
+	label {
+		display: block;
+	}
+	#controls {
+		position: absolute;
+		z-index: 300;
+		left: 50%;
+		top: 50%;
+		margin-left: -200px;
+		width: 400px;
+		opacity: 0.8;
+	}
+	</style>
 </head>
 <body>
 

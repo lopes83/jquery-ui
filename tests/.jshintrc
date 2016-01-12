@@ -6,6 +6,7 @@
 	"expr": true,
 	"immed": true,
 	"noarg": true,
+	"onevar": true,
 	"quotmark": "double",
 	"smarttabs": true,
 	"trailing": true,
@@ -19,8 +20,9 @@
 
 	"globals": {
 		"asyncTest": false,
+		"closeEnough": false,
 		"deepEqual": false,
-		"define": false,
+		"domEqual": false,
 		"equal": false,
 		"expect": false,
 		"Globalize": false,
@@ -30,12 +32,11 @@
 		"notStrictEqual": false,
 		"ok": false,
 		"QUnit": true,
-		"require": true,
-		"requirejs": true,
 		"start": false,
 		"strictEqual": false,
 		"stop": false,
 		"test": false,
+		"TestHelpers": true,
 		"JSHINT": false
 	}
 }

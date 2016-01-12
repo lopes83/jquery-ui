@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Tooltip - Forms</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/position.js"></script>
+	<script src="../../ui/tooltip.js"></script>
+	<script src="../../ui/button.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	label {
@@ -20,22 +25,22 @@
 		width: 210px;
 	}
 	</style>
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js" data-modules="button">
+	<script>
+	$(function() {
 		var tooltips = $( "[title]" ).tooltip({
 			position: {
 				my: "left top",
-				at: "right+5 top-5",
-				collision: "none"
+				at: "right+5 top-5"
 			}
 		});
 		$( "<button>" )
 			.text( "Show help" )
 			.button()
-			.on( "click", function() {
+			.click(function() {
 				tooltips.tooltip( "open" );
 			})
 			.insertAfter( "form" );
+	});
 	</script>
 </head>
 <body>

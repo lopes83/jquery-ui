@@ -4,13 +4,19 @@
 	<meta charset="utf-8">
 	<title>Draggable Visual Test</title>
 	<link rel="stylesheet" href="../../../themes/base/all.css">
-	<script src="../../../external/requirejs/require.js"></script>
-	<script src="../../../demos/bootstrap.js">
+	<script src="../../../external/jquery/jquery.js"></script>
+	<script src="../../../ui/core.js"></script>
+	<script src="../../../ui/widget.js"></script>
+	<script src="../../../ui/mouse.js"></script>
+	<script src="../../../ui/draggable.js"></script>
+	<script>
+	$(function() {
 		$( "#draggable" )
 			.draggable()
-			.on( "mousedown", function() {
+			.bind( "mousedown", function() {
 				$( this ).html( "<div>replaced</div>" );
 			});
+	});
 	</script>
 
 	<style>

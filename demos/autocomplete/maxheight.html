@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Autocomplete - Scrollable results</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/position.js"></script>
+	<script src="../../ui/menu.js"></script>
+	<script src="../../ui/autocomplete.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	.ui-autocomplete {
@@ -20,8 +25,8 @@
 		height: 100px;
 	}
 	</style>
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js">
+	<script>
+	$(function() {
 		var availableTags = [
 			"ActionScript",
 			"AppleScript",
@@ -49,6 +54,7 @@
 		$( "#tags" ).autocomplete({
 			source: availableTags
 		});
+	});
 	</script>
 </head>
 <body>

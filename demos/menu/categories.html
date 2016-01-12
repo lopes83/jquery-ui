@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Menu - Categories</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/position.js"></script>
+	<script src="../../ui/menu.js"></script>
 	<link rel="stylesheet" href="../demos.css">
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js">
+	<script>
+	$(function() {
 		$( "#menu" ).menu({
 			items: "> :not(.ui-widget-header)"
 		});
+	});
 	</script>
 	<style>
 	.ui-menu { width: 200px; }
@@ -20,14 +25,14 @@
 <body>
 
 <ul id="menu">
-	<li class="ui-widget-header"><div>Category 1</div></li>
-	<li><div>Option 1</div></li>
-	<li><div>Option 2</div></li>
-	<li><div>Option 3</div></li>
-	<li class="ui-widget-header"><div>Category 2</div></li>
-	<li><div>Option 4</div></li>
-	<li><div>Option 5</div></li>
-	<li><div>Option 6</div></li>
+	<li class="ui-widget-header">Category 1</li>
+	<li>Option 1</li>
+	<li>Option 2</li>
+	<li>Option 3</li>
+	<li class="ui-widget-header">Category 2</li>    
+	<li>Option 4</li>
+	<li>Option 5</li>
+	<li>Option 6</li>
 </ul>
 
 <div class="demo-description">

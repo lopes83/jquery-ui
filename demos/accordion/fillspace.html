@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Accordion - Fill space</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/mouse.js"></script>
+	<script src="../../ui/resizable.js"></script>
+	<script src="../../ui/accordion.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	#accordion-resizer {
@@ -13,12 +18,13 @@
 		height: 220px;
 	}
 	</style>
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js" data-modules="resizable">
+	<script>
+	$(function() {
 		$( "#accordion" ).accordion({
 			heightStyle: "fill"
 		});
-
+	});
+	$(function() {
 		$( "#accordion-resizer" ).resizable({
 			minHeight: 140,
 			minWidth: 200,
@@ -26,6 +32,7 @@
 				$( "#accordion" ).accordion( "refresh" );
 			}
 		});
+	});
 	</script>
 </head>
 <body>

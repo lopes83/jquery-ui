@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>jQuery UI Autocomplete - Combobox</title>
 	<link rel="stylesheet" href="../../themes/base/all.css">
+	<script src="../../external/jquery/jquery.js"></script>
+	<script src="../../ui/core.js"></script>
+	<script src="../../ui/widget.js"></script>
+	<script src="../../ui/button.js"></script>
+	<script src="../../ui/position.js"></script>
+	<script src="../../ui/menu.js"></script>
+	<script src="../../ui/autocomplete.js"></script>
+	<script src="../../ui/tooltip.js"></script>
 	<link rel="stylesheet" href="../demos.css">
 	<style>
 	.custom-combobox {
@@ -23,8 +30,8 @@
 		padding: 5px 10px;
 	}
 	</style>
-	<script src="../../external/requirejs/require.js"></script>
-	<script src="../bootstrap.js" data-modules="tooltip button">
+	<script>
+	(function( $ ) {
 		$.widget( "custom.combobox", {
 			_create: function() {
 				this.wrapper = $( "<span>" )
@@ -51,9 +58,7 @@
 						source: $.proxy( this, "_source" )
 					})
 					.tooltip({
-						classes: {
-							"ui-tooltip": "ui-state-highlight"
-						}
+						tooltipClass: "ui-state-highlight"
 					});
 
 				this._on( this.input, {
@@ -85,11 +90,11 @@
 					})
 					.removeClass( "ui-corner-all" )
 					.addClass( "custom-combobox-toggle ui-corner-right" )
-					.on( "mousedown", function() {
+					.mousedown(function() {
 						wasOpen = input.autocomplete( "widget" ).is( ":visible" );
 					})
-					.on( "click", function() {
-						input.trigger( "focus" );
+					.click(function() {
+						input.focus();
 
 						// Close if already visible
 						if ( wasOpen ) {
@@ -154,11 +159,14 @@
 				this.element.show();
 			}
 		});
+	})( jQuery );
 
+	$(function() {
 		$( "#combobox" ).combobox();
-		$( "#toggle" ).on( "click", function() {
+		$( "#toggle" ).click(function() {
 			$( "#combobox" ).toggle();
 		});
+	});
 	</script>
 </head>
 <body>

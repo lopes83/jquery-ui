@@ -29,8 +29,6 @@ var
 		"accordion",
 		"autocomplete",
 		"button",
-		"checkboxradio",
-		"controlgroup",
 		"datepicker",
 		"dialog",
 		"draggable",
@@ -78,17 +76,10 @@ var
 			"dist/jquery-ui.min.js"
 		]
 	},
-	component = grunt.option( "component" ) || "**",
-
-	htmllintBad = [
-		"demos/tabs/ajax/content*.html",
-		"demos/tooltip/ajax/content*.html",
-		"tests/unit/core/core.html",
-		"tests/unit/tabs/data/test.html"
-	];
+	component = grunt.option( "component" ) || "**";
 
 function mapMinFile( file ) {
-	return "dist/" + file.replace( /ui\//, "minified/" );
+	return "dist/" + file.replace( /\.js$/, ".min.js" ).replace( /ui\//, "minified/" );
 }
 
 function expandFiles( files ) {
@@ -139,6 +130,23 @@ grunt.initConfig({
 	},
 	compare_size: compareFiles,
 	concat: {
+		ui: {
+			options: {
+				banner: createBanner( uiFiles ),
+				stripBanners: {
+					block: true
+				}
+			},
+			src: uiFiles,
+			dest: "dist/jquery-ui.js"
+		},
+		i18n: {
+			options: {
+				banner: createBanner( allI18nFiles )
+			},
+			src: allI18nFiles,
+			dest: "dist/i18n/jquery-ui-i18n.js"
+		},
 		css: {
 			options: {
 				banner: createBanner( cssFiles ),
@@ -150,67 +158,25 @@ grunt.initConfig({
 			dest: "dist/jquery-ui.css"
 		}
 	},
-	requirejs: {
-		js: {
-			options: {
-				baseUrl: "./",
-				paths: {
-					jquery: "./external/jquery/jquery",
-					external: "./external/"
-				},
-				preserveLicenseComments: false,
-				optimize: "none",
-				findNestedDependencies: true,
-				skipModuleInsertion: true,
-				exclude: [ "jquery" ],
-				include: expandFiles( [ "ui/**/*.js", "!ui/core.js", "!ui/i18n/*" ] ),
-				out: "dist/jquery-ui.js",
-				wrap: {
-					start: createBanner( uiFiles ),
-				}
-			}
-		}
-	},
-
 	jscs: {
-		all: {
-			options: {
-				config: true
-			},
-			files: {
-				src: [ "demos/**/*.js", "build/**/*.js", "tests/**/*.js", "ui/**/*.js" ]
-			}
-		}
+		// datepicker and sortable are getting rewritten, ignore until that's done
+		ui: [ "ui/*.js", "!ui/datepicker.js", "!ui/sortable.js" ],
+		// TODO enable this once we have a tool that can auto format files
+		// tests: "tests/unit/**/*.js",
+		grunt: [ "Gruntfile.js", "build/tasks/*.js" ]
 	},
 	uglify: minify,
 	htmllint: {
-		good: {
-			options: {
-				ignore: [
-				/The text content of element “script” was not in the required format: Expected space, tab, newline, or slash but found “.” instead/
-			] },
-			src: [ "demos/**/*.html", "tests/**/*.html" ].concat( htmllintBad.map( function( file ) {
-				return "!" + file;
-			} ) )
-		},
-		bad: {
-			options: {
-				ignore: [
-					/Start tag seen without seeing a doctype first/,
-					/Element “head” is missing a required instance of child element “title”/,
-					/Element “object” is missing one or more of the following/,
-					/The “codebase” attribute on the “object” element is obsolete/
-				]
-			},
-			src: htmllintBad
-		}
+		// ignore files that contain invalid html, used only for ajax content testing
+		all: grunt.file.expand( [ "demos/**/*.html", "tests/**/*.html" ] ).filter(function( file ) {
+			return !/(?:ajax\/content\d\.html|tabs\/data\/test\.html|tests\/unit\/core\/core.*\.html)/.test( file );
+		})
 	},
 	qunit: {
 		files: expandFiles( "tests/unit/" + component + "/*.html" ).filter(function( file ) {
 			return !( /(all|index|test)\.html$/ ).test( file );
 		}),
 		options: {
-			inject: false,
 			page: {
 				viewportSize: { width: 700, height: 500 }
 			}
@@ -224,9 +190,7 @@ grunt.initConfig({
 			"ui/*.js",
 			"Gruntfile.js",
 			"build/**/*.js",
-			"tests/unit/**/*.js",
-			"tests/lib/**/*.js",
-			"demos/**/*.js"
+			"tests/unit/**/*.js"
 		]
 	},
 	csslint: {
@@ -263,19 +227,7 @@ grunt.initConfig({
 			files: {
 				"qunit/qunit.js": "qunit/qunit/qunit.js",
 				"qunit/qunit.css": "qunit/qunit/qunit.css",
-				"qunit/LICENSE.txt": "qunit/LICENSE.txt",
-
-				"qunit-assert-classes/qunit-assert-classes.js": "qunit-assert-classes/qunit-assert-classes.js",
-				"qunit-assert-classes/LICENSE.txt": "qunit-assert-classes/LICENSE",
-
-				"qunit-assert-close/qunit-assert-close.js": "qunit-assert-close/qunit-assert-close.js",
-				"qunit-assert-close/MIT-LICENSE.txt": "qunit-assert-close/MIT-LICENSE.txt",
-
-				"qunit-composite/qunit-composite.js": "qunit-composite/qunit-composite.js",
-				"qunit-composite/qunit-composite.css": "qunit-composite/qunit-composite.css",
-				"qunit-composite/LICENSE.txt": "qunit-composite/LICENSE.txt",
-
-				"requirejs/require.js": "requirejs/require.js",
+				"qunit/MIT-LICENSE.txt": "qunit/MIT-LICENSE.txt",
 
 				"jquery-mousewheel/jquery.mousewheel.js": "jquery-mousewheel/jquery.mousewheel.js",
 				"jquery-mousewheel/LICENSE.txt": "jquery-mousewheel/LICENSE.txt",
@@ -286,8 +238,23 @@ grunt.initConfig({
 				"jshint/jshint.js": "jshint/dist/jshint.js",
 				"jshint/LICENSE": "jshint/LICENSE",
 
-				"jquery/jquery.js": "jquery-1.x/dist/jquery.js",
+				"jquery/jquery.js": "jquery-1.x/jquery.js",
 				"jquery/MIT-LICENSE.txt": "jquery-1.x/MIT-LICENSE.txt",
+
+				"jquery-1.6.0/jquery.js": "jquery-1.6.0/jquery.js",
+				"jquery-1.6.0/MIT-LICENSE.txt": "jquery-1.6.0/MIT-LICENSE.txt",
+
+				"jquery-1.6.1/jquery.js": "jquery-1.6.1/jquery.js",
+				"jquery-1.6.1/MIT-LICENSE.txt": "jquery-1.6.1/MIT-LICENSE.txt",
+
+				"jquery-1.6.2/jquery.js": "jquery-1.6.2/jquery.js",
+				"jquery-1.6.2/MIT-LICENSE.txt": "jquery-1.6.2/MIT-LICENSE.txt",
+
+				"jquery-1.6.3/jquery.js": "jquery-1.6.3/jquery.js",
+				"jquery-1.6.3/MIT-LICENSE.txt": "jquery-1.6.3/MIT-LICENSE.txt",
+
+				"jquery-1.6.4/jquery.js": "jquery-1.6.4/jquery.js",
+				"jquery-1.6.4/MIT-LICENSE.txt": "jquery-1.6.4/MIT-LICENSE.txt",
 
 				"jquery-1.7.0/jquery.js": "jquery-1.7.0/jquery.js",
 				"jquery-1.7.0/MIT-LICENSE.txt": "jquery-1.7.0/MIT-LICENSE.txt",
@@ -325,18 +292,6 @@ grunt.initConfig({
 				"jquery-1.10.2/jquery.js": "jquery-1.10.2/jquery.js",
 				"jquery-1.10.2/MIT-LICENSE.txt": "jquery-1.10.2/MIT-LICENSE.txt",
 
-				"jquery-1.11.0/jquery.js": "jquery-1.11.0/dist/jquery.js",
-				"jquery-1.11.0/MIT-LICENSE.txt": "jquery-1.11.0/MIT-LICENSE.txt",
-
-				"jquery-1.11.1/jquery.js": "jquery-1.11.1/dist/jquery.js",
-				"jquery-1.11.1/MIT-LICENSE.txt": "jquery-1.11.1/MIT-LICENSE.txt",
-
-				"jquery-1.11.2/jquery.js": "jquery-1.11.2/dist/jquery.js",
-				"jquery-1.11.2/MIT-LICENSE.txt": "jquery-1.11.2/MIT-LICENSE.txt",
-
-				"jquery-1.11.3/jquery.js": "jquery-1.11.3/dist/jquery.js",
-				"jquery-1.11.3/MIT-LICENSE.txt": "jquery-1.11.3/MIT-LICENSE.txt",
-
 				"jquery-2.0.0/jquery.js": "jquery-2.0.0/jquery.js",
 				"jquery-2.0.0/MIT-LICENSE.txt": "jquery-2.0.0/MIT-LICENSE.txt",
 
@@ -347,86 +302,16 @@ grunt.initConfig({
 				"jquery-2.0.2/MIT-LICENSE.txt": "jquery-2.0.2/MIT-LICENSE.txt",
 
 				"jquery-2.0.3/jquery.js": "jquery-2.0.3/jquery.js",
-				"jquery-2.0.3/MIT-LICENSE.txt": "jquery-2.0.3/MIT-LICENSE.txt",
-
-				"jquery-2.1.0/jquery.js": "jquery-2.1.0/dist/jquery.js",
-				"jquery-2.1.0/MIT-LICENSE.txt": "jquery-2.1.0/MIT-LICENSE.txt",
-
-				"jquery-2.1.1/jquery.js": "jquery-2.1.1/dist/jquery.js",
-				"jquery-2.1.1/MIT-LICENSE.txt": "jquery-2.1.1/MIT-LICENSE.txt",
-
-				"jquery-2.1.2/jquery.js": "jquery-2.1.2/dist/jquery.js",
-				"jquery-2.1.2/MIT-LICENSE.txt": "jquery-2.1.2/MIT-LICENSE.txt",
-
-				"jquery-2.1.3/jquery.js": "jquery-2.1.3/dist/jquery.js",
-				"jquery-2.1.3/MIT-LICENSE.txt": "jquery-2.1.3/MIT-LICENSE.txt"
+				"jquery-2.0.3/MIT-LICENSE.txt": "jquery-2.0.3/MIT-LICENSE.txt"
 			}
 		}
-	},
-
-	authors: {
-		prior: [
-			"Paul Bakaus <paul.bakaus@gmail.com>",
-			"Richard Worth <rdworth@gmail.com>",
-			"Yehuda Katz <wycats@gmail.com>",
-			"Sean Catchpole <sean@sunsean.com>",
-			"John Resig <jeresig@gmail.com>",
-			"Tane Piper <piper.tane@gmail.com>",
-			"Dmitri Gaskin <dmitrig01@gmail.com>",
-			"Klaus Hartl <klaus.hartl@gmail.com>",
-			"Stefan Petre <stefan.petre@gmail.com>",
-			"Gilles van den Hoven <gilles@webunity.nl>",
-			"Micheil Bryan Smith <micheil@brandedcode.com>",
-			"Jörn Zaefferer <joern.zaefferer@gmail.com>",
-			"Marc Grabanski <m@marcgrabanski.com>",
-			"Keith Wood <kbwood@iinet.com.au>",
-			"Brandon Aaron <brandon.aaron@gmail.com>",
-			"Scott González <scott.gonzalez@gmail.com>",
-			"Eduardo Lundgren <eduardolundgren@gmail.com>",
-			"Aaron Eisenberger <aaronchi@gmail.com>",
-			"Joan Piedra <theneojp@gmail.com>",
-			"Bruno Basto <b.basto@gmail.com>",
-			"Remy Sharp <remy@leftlogic.com>",
-			"Bohdan Ganicky <bohdan.ganicky@gmail.com>"
-		]
 	}
 });
 
-grunt.registerTask( "update-authors", function() {
-	var getAuthors = require( "grunt-git-authors" ),
-		done = this.async();
-
-	getAuthors({
-		priorAuthors: grunt.config( "authors.prior" )
-	}, function( error, authors ) {
-		if ( error ) {
-			grunt.log.error( error );
-			return done( false );
-		}
-
-		authors = authors.map(function( author ) {
-			if ( author.match( /^Jacek Jędrzejewski </ ) ) {
-				return "Jacek Jędrzejewski (http://jacek.jedrzejewski.name)";
-			} else if ( author.match( /^Pawel Maruszczyk </ ) ) {
-				return "Pawel Maruszczyk (http://hrabstwo.net)";
-			} else {
-				return author;
-			}
-		});
-
-		grunt.file.write( "AUTHORS.txt",
-			"Authors ordered by first contribution\n" +
-			"A list of current team members is available at http://jqueryui.com/about\n\n" +
-			authors.join( "\n" ) + "\n" );
-		done();
-	});
-});
-
-grunt.registerTask( "default", [ "lint", "requirejs", "test" ]);
-grunt.registerTask( "jenkins", [ "default", "concat" ]);
+grunt.registerTask( "default", [ "lint", "test" ]);
 grunt.registerTask( "lint", [ "asciilint", "jshint", "jscs", "csslint", "htmllint" ]);
 grunt.registerTask( "test", [ "qunit" ]);
-grunt.registerTask( "sizer", [ "requirejs:js", "uglify:main", "compare_size:all" ]);
-grunt.registerTask( "sizer_all", [ "requirejs:js", "uglify", "compare_size" ]);
+grunt.registerTask( "sizer", [ "concat:ui", "uglify:main", "compare_size:all" ]);
+grunt.registerTask( "sizer_all", [ "concat:ui", "uglify", "compare_size" ]);
 
 };

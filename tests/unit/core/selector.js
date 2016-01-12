@@ -1,10 +1,4 @@
-define( [
-	"jquery",
-	"ui/data",
-	"ui/escape-selector",
-	"ui/focusable",
-	"ui/tabbable"
-], function( $ ) {
+(function( $ ) {
 
 module( "core - selectors" );
 
@@ -14,7 +8,7 @@ function isFocusable( selector, msg ) {
 }
 
 function isNotFocusable( selector, msg ) {
-	QUnit.push( $( selector ).length && !$( selector ).is( ":focusable" ), null, null,
+	QUnit.push( $( selector ).length && !$( selector ).is(":focusable"), null, null,
 		msg + " - selector " + selector + " is not focusable" );
 }
 
@@ -85,10 +79,10 @@ test( "data", function() {
 
 	element = $( "<div>" ).data( "test", function() {} );
 	shouldHaveData( "data set to function" );
-} );
+});
 
 test( "focusable - visible, enabled elements", function() {
-	expect( 20 );
+	expect( 18 );
 
 	isNotFocusable( "#formNoTabindex", "form" );
 	isFocusable( "#formTabindex", "form with tabindex" );
@@ -108,11 +102,7 @@ test( "focusable - visible, enabled elements", function() {
 	isNotFocusable( "#visibleAncestor-div", "div" );
 	isFocusable( "#visibleAncestor-spanWithTabindex", "span with tabindex" );
 	isFocusable( "#visibleAncestor-divWithNegativeTabindex", "div with tabindex" );
-	isFocusable( "#nestedVisibilityInheritWithVisibleAncestor",
-			"span, visibility: inherit inside visibility: visible parent" );
-	isFocusable( "#nestedVisibilityInheritWithVisibleAncestor-input",
-			"input, visibility: inherit inside visibility: visible parent" );
-} );
+});
 
 test( "focusable - disabled elements", function() {
 	expect( 9 );
@@ -126,10 +116,10 @@ test( "focusable - disabled elements", function() {
 	isNotFocusable( "#disabledElement-button", "button" );
 	isNotFocusable( "#disabledElement-select", "select" );
 	isNotFocusable( "#disabledElement-textarea", "textarea" );
-} );
+});
 
 test( "focusable - hidden styles", function() {
-	expect( 12 );
+	expect( 8 );
 
 	isNotFocusable( "#displayNoneAncestor-input", "input, display: none parent" );
 	isNotFocusable( "#displayNoneAncestor-span", "span with tabindex, display: none parent" );
@@ -137,18 +127,12 @@ test( "focusable - hidden styles", function() {
 	isNotFocusable( "#visibilityHiddenAncestor-input", "input, visibility: hidden parent" );
 	isNotFocusable( "#visibilityHiddenAncestor-span", "span with tabindex, visibility: hidden parent" );
 
-	isFocusable( "#nestedVisibilityOverrideAncestor-input", "input, visibility: visible parent but visibility: hidden grandparent" );
-	isFocusable( "#nestedVisibilityOverrideAncestor-span", "span with tabindex, visibility: visible parent but visibility: hidden grandparent " );
-
-	isNotFocusable( "#nestedVisibilityInheritWithHiddenAncestor", "span, visibility: inherit inside visibility: hidden parent" );
-	isNotFocusable( "#nestedVisibilityInheritWithHiddenAncestor-input", "input, visibility: inherit inside visibility: hidden parent" );
-
 	isNotFocusable( "#displayNone-input", "input, display: none" );
 	isNotFocusable( "#visibilityHidden-input", "input, visibility: hidden" );
 
 	isNotFocusable( "#displayNone-span", "span with tabindex, display: none" );
 	isNotFocusable( "#visibilityHidden-span", "span with tabindex, visibility: hidden" );
-} );
+});
 
 test( "focusable - natively focusable with various tabindex", function() {
 	expect( 4 );
@@ -157,7 +141,7 @@ test( "focusable - natively focusable with various tabindex", function() {
 	isFocusable( "#inputTabindex10", "input, tabindex 10" );
 	isFocusable( "#inputTabindex-1", "input, tabindex -1" );
 	isFocusable( "#inputTabindex-50", "input, tabindex -50" );
-} );
+});
 
 test( "focusable - not natively focusable with various tabindex", function() {
 	expect( 4 );
@@ -166,7 +150,7 @@ test( "focusable - not natively focusable with various tabindex", function() {
 	isFocusable( "#spanTabindex10", "span, tabindex 10" );
 	isFocusable( "#spanTabindex-1", "span, tabindex -1" );
 	isFocusable( "#spanTabindex-50", "span, tabindex -50" );
-} );
+});
 
 test( "focusable - area elements", function() {
 	expect( 3 );
@@ -174,13 +158,13 @@ test( "focusable - area elements", function() {
 	isFocusable( "#areaCoordsHref", "coords and href" );
 	isFocusable( "#areaNoCoordsHref", "href but no coords" );
 	isNotFocusable( "#areaNoImg", "not associated with an image" );
-} );
+});
 
 test( "focusable - dimensionless parent with overflow", function() {
 	expect( 1 );
 
 	isFocusable( "#dimensionlessParent", "input" );
-} );
+});
 
 test( "tabbable - visible, enabled elements", function() {
 	expect( 18 );
@@ -203,7 +187,7 @@ test( "tabbable - visible, enabled elements", function() {
 	isNotTabbable( "#visibleAncestor-div", "div" );
 	isTabbable( "#visibleAncestor-spanWithTabindex", "span with tabindex" );
 	isNotTabbable( "#visibleAncestor-divWithNegativeTabindex", "div with tabindex" );
-} );
+});
 
 test( "tabbable - disabled elements", function() {
 	expect( 9 );
@@ -217,10 +201,10 @@ test( "tabbable - disabled elements", function() {
 	isNotTabbable( "#disabledElement-button", "button" );
 	isNotTabbable( "#disabledElement-select", "select" );
 	isNotTabbable( "#disabledElement-textarea", "textarea" );
-} );
+});
 
 test( "tabbable - hidden styles", function() {
-	expect( 10 );
+	expect( 8 );
 
 	isNotTabbable( "#displayNoneAncestor-input", "input, display: none parent" );
 	isNotTabbable( "#displayNoneAncestor-span", "span with tabindex, display: none parent" );
@@ -228,15 +212,12 @@ test( "tabbable - hidden styles", function() {
 	isNotTabbable( "#visibilityHiddenAncestor-input", "input, visibility: hidden parent" );
 	isNotTabbable( "#visibilityHiddenAncestor-span", "span with tabindex, visibility: hidden parent" );
 
-	isTabbable( "#nestedVisibilityOverrideAncestor-input", "input, visibility: visible parent but visibility: hidden grandparent" );
-	isTabbable( "#nestedVisibilityOverrideAncestor-span", "span with tabindex, visibility: visible parent but visibility: hidden grandparent " );
-
 	isNotTabbable( "#displayNone-input", "input, display: none" );
 	isNotTabbable( "#visibilityHidden-input", "input, visibility: hidden" );
 
 	isNotTabbable( "#displayNone-span", "span with tabindex, display: none" );
 	isNotTabbable( "#visibilityHidden-span", "span with tabindex, visibility: hidden" );
-} );
+});
 
 test( "tabbable -  natively tabbable with various tabindex", function() {
 	expect( 4 );
@@ -245,7 +226,7 @@ test( "tabbable -  natively tabbable with various tabindex", function() {
 	isTabbable( "#inputTabindex10", "input, tabindex 10" );
 	isNotTabbable( "#inputTabindex-1", "input, tabindex -1" );
 	isNotTabbable( "#inputTabindex-50", "input, tabindex -50" );
-} );
+});
 
 test( "tabbable -  not natively tabbable with various tabindex", function() {
 	expect( 4 );
@@ -254,7 +235,7 @@ test( "tabbable -  not natively tabbable with various tabindex", function() {
 	isTabbable( "#spanTabindex10", "span, tabindex 10" );
 	isNotTabbable( "#spanTabindex-1", "span, tabindex -1" );
 	isNotTabbable( "#spanTabindex-50", "span, tabindex -50" );
-} );
+});
 
 test( "tabbable - area elements", function() {
 	expect( 3 );
@@ -262,19 +243,12 @@ test( "tabbable - area elements", function() {
 	isTabbable( "#areaCoordsHref", "coords and href" );
 	isTabbable( "#areaNoCoordsHref", "href but no coords" );
 	isNotTabbable( "#areaNoImg", "not associated with an image" );
-} );
+});
 
 test( "tabbable - dimensionless parent with overflow", function() {
 	expect( 1 );
 
 	isTabbable( "#dimensionlessParent", "input" );
-} );
+});
 
-test( "escapeSelector", function() {
-	expect( 1 );
-
-	equal( $( "#" + $.ui.escapeSelector( "weird-['x']-id" ) ).length, 1,
-		"properly escapes selectors to use as an id" );
-} );
-
-} );
+})( jQuery );

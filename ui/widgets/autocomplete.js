@@ -130,7 +130,15 @@ $.widget( "ui.autocomplete", {
 						suppressKeyPress = true;
 						event.preventDefault();
 						this.menu.select( event );
+					} else {
+						if ( this._value().length >= this.options.minLength ) {
+							suppressKeyPressRepeat = true;
+
+							// search timeout should be triggered before the input value is changed
+							this._searchTimeout( event );
+						}
 					}
+
 					break;
 				case keyCode.TAB:
 					if ( this.menu.active ) {
