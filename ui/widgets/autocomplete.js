@@ -121,7 +121,6 @@ $.widget( "ui.autocomplete", {
 					this._keyEvent( "next", event );
 					break;
 				case keyCode.ENTER:
-
 					// when menu is open and has focus
 					if ( this.menu.active ) {
 
@@ -138,7 +137,6 @@ $.widget( "ui.autocomplete", {
 							this._searchTimeout( event );
 						}
 					}
-
 					break;
 				case keyCode.TAB:
 					if ( this.menu.active ) {
