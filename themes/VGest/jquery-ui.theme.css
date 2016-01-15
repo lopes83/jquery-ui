@@ -436,3 +436,46 @@
 	filter: Alpha(Opacity=30); /* support: IE8 */
 	border-radius: 8px;
 }
+
+/*
+ * VGest
+ */
+.ui-icon-green {
+	background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    text-indent: -99999px;
+	width: 16px;
+	height: 16px;
+	background-image: url("/library/bower_components/jquery-ui/themes/VGest/images/ui-icons_33FF33_256x240.png");
+}
+
+.ui-icon-yellow {
+	background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    text-indent: -99999px;
+	width: 16px;
+	height: 16px;
+	background-image: url("/library/bower_components/jquery-ui/themes/VGest/images/ui-icons_FFFF00_256x240.png");
+}
+
+.ui-icon-red {
+	background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    text-indent: -99999px;
+	width: 16px;
+	height: 16px;
+	background-image: url("/library/bower_components/jquery-ui/themes/VGest/images/ui-icons_FF0000_256x240.png");
+}
+
+.ui-icon-orange {
+	background-repeat: no-repeat;
+    display: block;
+    overflow: hidden;
+    text-indent: -99999px;
+	width: 16px;
+	height: 16px;
+	background-image: url("/library/bower_components/jquery-ui/themes/VGest/images/ui-icons_FF8000_256x240.png");
+}
